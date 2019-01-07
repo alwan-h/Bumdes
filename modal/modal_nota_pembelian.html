@@ -1,0 +1,108 @@
+<div class="modal fade" id="nota_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="nota_modal_title">Nota Pembelian</h4>
+      </div>
+      <div class="modal-body" id="nota_modal_body">
+        
+        <!-- <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-6">
+              <h3>BUMDES MAJU BERSAMA</h3>
+            </div>
+          </div>
+        </div> -->
+        <table width=100% class="my-table">
+          <tr>
+            <td style="width:70%">
+              <h5>BUMDES MAJU BERSAMA</h5>
+              <p>Jln. Kiyai Tapa No. 123 Nagakeo Nusa Tenggara Timur<br> Telp. 0192736484506</p>
+              <p></p>
+            </td>
+            <td style="width:9%">
+              <p>Tanggal</p>
+              <p>Nama</p>
+              <p>Keterangan</p>
+            </td>
+            <td style="width:1%">
+              <p>:</p>
+              <p>:</p>
+              <p>:</p>
+            </td>
+            <td style="width:20%">
+              <p id="nota-tanggal">-</p>
+              <p id="nota-nama">-</p>
+              <p id="nota-ket">-</p>
+            </td>
+          </tr>
+        </table>
+        <table width=100% class="my-table table table-bordered">
+          <tr>
+            <td colspan="5" style="text-align:center">
+              <h5>NOTA PEMBELIAN</h5>
+            </td>
+          </tr>
+          <tr>
+            <th>Nama Barang</th>
+            <th>Jumlah</th>
+            <th>Satuan</th>
+            <th>Harga/Kg</th>
+            <th>Jumlah Bayar</th>
+          </tr>
+          <tr>
+            <td><p id="nota-nama-barang"></p></td>
+            <td><p id="nota-jumlah-barang"></p></td>
+            <td><p id="nota-satuan-barang"></p></td>
+            <td><p id="nota-harga-barang"></p></td>
+            <td><p id="nota-jumlah-pembayaran"></p></td>
+          </tr>
+        </table>
+
+        <table width=100% class="my-table">
+          <tr>
+            <td colspan="2">
+              <p>Catatan :</p>
+              <ol>
+                <li>Barang yang sudah dipesan tidak dapat dibatalkan</li>
+                <li>Pemesanan Pupuk, pelanggan membayar DP minimal 20% dari harga total pupuk dan dilunasi pada saat pengambilan pupuk tersebut</li>
+              </ol>
+            </td>
+            <td style="width:20%; padding-left: 30px" rowspan="2">
+              <p><strong>Total Harga</strong></p>
+              <p><strong>Sudah dibayar</strong></p>
+              <p><strong>Sisa</strong></p>
+            </td>
+            <td style="width:20%" rowspan="2">
+              <p><strong>Rp.<span id="nota-total"></span></strong></p>
+              <p><strong>Rp.<span id="nota-dp"></span></strong></p>
+              <p><strong>Rp.<span id="nota-sisa"></span></strong></p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 30%">
+              <p><strong>Kasir</strong></p>
+              <div style="width: 100px; margin-top: 20px; border-bottom: 1px solid black"><span>Kasir</span></div>
+            </td>
+            <td>
+              <p><strong>Pelanggan</strong></p>
+              <div style="width: 100px; margin-top: 20px; border-bottom: 1px solid black"><span id="nama-konsumen"></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="print-nota" class="btn btn-primary">Print</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- <script>
+  $(document).ready(function() {
+    $('#nota_modal').modal('show')
+  })
+</script> -->

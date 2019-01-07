@@ -1,0 +1,1 @@
+exports.uriDb = '../database.sqlite3'

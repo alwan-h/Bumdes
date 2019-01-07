@@ -1,0 +1,184 @@
+<template class="task-template">
+  <section id="beranda-section" class="section js-section u-category-beranda is-shown">
+    
+      <div class="section-wrapper">
+        <!-- <div class="section-header">BERANDA</div> -->
+          <div class="row">
+						<div class="col-sm-4">
+							<div class="card">
+								<div class="header">
+									<p class="category"><strong>Total Pembelian Pupuk</strong> </p>
+								</div>
+								<div class="content">
+									<div class="row">
+										<div class="col-sm-12">
+											<div id="pembelianPupuk" class="nilai">0</div>
+											<div class="back-icon">
+												<img src="./assets/img/bar-chart-3.png" alt="">
+											</div>
+										</div>
+										
+									</div>
+								</div>
+								
+							</div>
+						</div>
+              <div class="col-sm-4">
+								<div class="card">
+									<div class="header">
+										<p class="category"><strong>Total Penjualan Pupuk</strong> </p>
+									</div>
+									<div class="content">
+										<div class="row">
+											<div class="col-sm-12">
+												<div id="penjualanPupuk" class="nilai">0</div>
+												<div class="back-icon">
+														<img src="./assets/img/bar-chart.png" alt="">
+													</div>
+											</div>
+										</div>
+									</div>
+								</div>
+              </div>
+              <div class="col-sm-4">
+                  <div class="card">
+                      <div class="header">
+                          <p class="category"><strong>Total Penjualan Air</strong> </p>
+                      </div>
+                      <div class="content">
+                          <div class="row">
+                            <div class="col-sm-12">
+															<div id="penjualanAir" class="nilai">0</div>
+															<div class="back-icon">
+																	<img src="./assets/img/bar-chart-2.png" alt="">
+																</div>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+							</div>
+							
+							<div class="col-sm-4">
+								<div class="card">
+										<div class="header">
+												<p class="category"><strong>Total Stock Gudang</strong> </p>
+										</div>
+										<div class="content">
+												<div class="row">
+													<div class="col-sm-12">
+														<div id="stockGudang" class="nilai">0</div>
+														<div class="back-icon">
+																<img src="./assets/img/bar-chart-3.png" alt="">
+															</div>
+													</div>
+												</div>
+										</div>
+								</div>
+						</div>
+
+						<div class="col-sm-4">
+							<div class="card">
+									<div class="header">
+											<p class="category"><strong>Total Pemesanan</strong> </p>
+									</div>
+									<div class="content">
+											<div class="row">
+												<div class="col-sm-12">
+													<div id="pemesanan" class="nilai">0</div>
+													<div class="back-icon">
+															<img src="./assets/img/bar-chart.png" alt="">
+														</div>
+												</div>
+											</div>
+									</div>
+							</div>
+						</div>
+
+						<div class="col-sm-4">
+							<div class="card">
+									<div class="header">
+											<p class="category"><strong>Total Piutang</strong> </p>
+									</div>
+									<div class="content">
+											<div class="row">
+												<div class="col-sm-12">
+													<div id="piutang" class="nilai">0</div>
+													<div class="back-icon">
+															<img src="./assets/img/bar-chart-2.png" alt="">
+														</div>
+												</div>
+											</div>
+									</div>
+							</div>
+						</div>
+        
+              <div class="col-sm-6">
+                  <div class="card">
+                      <div class="header">
+                          <p class="category"><strong>Grafik Penjualan Pupuk Tahun <span class="grafikTahun"></span></strong> </p>
+											</div>
+											<div class="row">
+												<div class="col-sm-12">
+													<div class="col-sm-12">
+														<canvas id="pupukChart" height="120"></canvas>
+													</div>
+												</div>
+											</div>
+                  </div>
+							</div>
+							
+							<div class="col-sm-6">
+								<div class="card">
+										<div class="header">
+												<p class="category"><strong>Grafik Penjualan Air Isi Ulang Tahun <span class="grafikTahun"></span></strong> </p>
+										</div>
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="col-sm-12">
+													<canvas id="airChart" height="120"></canvas>
+												</div>
+											</div>
+										</div>
+								</div>
+							</div>
+
+							<div class="col-sm-6">
+								<div class="card">
+										<div class="header">
+												<p class="category"><strong>Grafik Jumlah Transaksi Tahun <span class="grafikTahun"></span></strong> </p>
+										</div>
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="col-sm-12">
+													<canvas id="transaksiChart" height="120"></canvas>
+												</div>
+											</div>
+										</div>
+								</div>
+						</div>
+
+							<div class="col-sm-6">
+								<div class="card">
+										<div class="header">
+												<p class="category"><strong>Grafik Keuntungan Tahun <span class="grafikTahun"></span></strong> </p>
+										</div>
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="col-sm-12">
+													<canvas id="keuntunganChart" height="120"></canvas>
+												</div>
+											</div>
+										</div>
+								</div>
+						</div>
+
+						
+      </div>
+    
+  </section>
+</template>
+<script src="../assets/js/Chart.bundle.min.js" type="text/javascript"></script>
+<script>
+	require('./render-process/render-beranda.js')
+	//require('./render-process/render-chart.js')
+</script>

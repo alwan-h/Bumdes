@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Nota</title>
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+  <script>window.$ = window.jQuery = require('../assets/js/jquery.min.js');</script>
+</head>
+<body>
+    <table width=100% class="my-table">
+        <tr>
+          <td style="width:70%">
+            <h5>BUMDES MAJU BERSAMA</h5>
+            <p>Jln. Kiyai Tapa No. 123 Nagakeo Nusa Tenggara Timur<br> Telp. 0192736484506</p>
+            <p></p>
+          </td>
+          <td style="width:9%">
+            <p>Tanggal</p>
+            <p>Nama</p>
+            <p>Keterangan</p>
+          </td>
+          <td style="width:1%">
+            <p>:</p>
+            <p>:</p>
+            <p>:</p>
+          </td>
+          <td style="width:20%">
+            <p id="nota-tanggal">-</p>
+            <p id="nota-nama">-</p>
+            <p id="nota-telp">-</p>
+          </td>
+        </tr>
+      </table>
+      <table width=100% class="my-table table table-bordered">
+        <tr>
+          <td colspan="5" style="text-align:center">
+            <h5>NOTA PEMBELIAN</h5>
+          </td>
+        </tr>
+        <tr>
+          <th>Nama Barang</th>
+          <th>Jumlah</th>
+          <th>Satuan</th>
+          <th>Harga/Kg</th>
+          <th>Jumlah Bayar</th>
+        </tr>
+        <tr>
+          <td><p id="nota-nama-barang"></p></td>
+          <td><p id="nota-jumlah-barang"></p></td>
+          <td><p id="nota-satuan-barang"></p></td>
+          <td><p id="nota-harga-barang"></p></td>
+          <td><p id="nota-jumlah-pembayaran"></p></td>
+        </tr>
+      </table>
+
+      <table width=100% class="my-table">
+        <tr>
+          <td colspan="2">
+            <p>Catatan :</p>
+            <ol>
+              <li>Barang yang sudah dipesan tidak dapat dibatalkan</li>
+              <li>Pemesanan Pupuk, pelanggan membayar DP minimal 20% dari harga total pupuk dan dilunasi pada saat pengambilan pupuk tersebut</li>
+            </ol>
+          </td>
+          <td style="width:20%; padding-left: 30px" rowspan="2">
+            <p><strong>Total Harga</strong></p>
+            <p><strong>Sudah dibayar</strong></p>
+            <p><strong>Sisa</strong></p>
+          </td>
+          <td style="width:20%" rowspan="2">
+            <p><strong>Rp.<span id="nota-total"></span></strong></p>
+            <p><strong>Rp.<span id="nota-dp"></span></strong></p>
+            <p><strong>Rp.<span id="nota-sisa"></span></strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 30%">
+            <p><strong>Kasir</strong></p>
+            <div style="width: 100px; margin-top: 20px; border-bottom: 1px solid black"><span>Kasir</span></div>
+          </td>
+          <td>
+            <p><strong>Pelanggan</strong></p>
+            <div style="width: 100px; margin-top: 20px; border-bottom: 1px solid black"><span id="nama-konsumen"></span></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+<script>
+  // require('../render-process/render-print-nota.js')
+  const {ipcRenderer} = require('electron')
+  //$(document).ready(function() {
+    ipcRenderer.on('data-print-nota', (event, arg) => {
+      console.log('data from print nota', arg)
+      $('#nota-tanggal').text(arg.nota_tanggal)
+      $('#nota-nama').text(arg.nota_nama)
+      $('#nota-telp').text(arg.nota_ket)
+      $('#nota-nama-barang').text(arg.nota_nama_barang)
+      $('#nota-jumlah-barang').text(arg.nota_jumlah_barang)
+      $('#nota-satuan-barang').text(arg.nota_satuan_barang)
+      $('#nota-harga-barang').text(arg.nota_harga_barang)
+      $('#nota-total').text(arg.nota_total)
+      $('#nota-dp').text(arg.nota_dp)
+      $('#nota-sisa').text(arg.nota_sisa)
+      $('#nama-konsumen').text(arg.nama_konsumen)
+      $('#nota-jumlah-pembayaran').text(arg.nota_jumlah_pembayaran)
+    })
+  //})
+</script>
+</body>
+</html>

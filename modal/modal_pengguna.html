@@ -1,0 +1,37 @@
+<!-- <template classs="modal-template"> -->
+  <div class="modal fade" id="user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="user_modal_title">Modal User</h4>
+        </div>
+        <div class="modal-body" id="user_modal_body">
+          <div class="row">
+            <div class="col-md-12">
+              <form>
+          
+                <div class="form-group">
+                  <label for="user_password">Password Baru</label>
+                  <input type="text" class="form-control" placeholder="Password baru" id="user_password">
+                </div>
+
+                <input type="hidden" id="user_id">
+                
+                <div class="footer-btn pull-right">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                  <button type="button" class="btn btn-primary" id="edit_user_password">Simpan</button>
+                </div>
+          
+              </form>
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+<!-- </template> -->
+<script>
+  require('./render-process/render-modal-pengguna.js')
+</script>
+

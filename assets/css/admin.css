@@ -1,0 +1,91 @@
+.btn-primary {
+  /* border-color: #9368E9;
+  color: #9368E9; */
+  border-color: #0ec8e0;
+  color: #0ec8e0
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+  border-color: r#0dadc2;
+  color: #0dadc2;
+}
+
+.btn-primary.btn-fill {
+  background-color: #0ec8e0;
+  
+}
+
+.btn-primary.btn-fill:hover, .btn-primary.btn-fill:focus, .btn-primary.btn-fill:active {
+  background-color: #0dadc2;
+  border-color: #0dadc2;
+  
+}
+
+
+.btn-margin-bottom {
+  margin-bottom: 30px;
+}
+
+.content-wrapper {
+  height: 100%;
+  overflow: scroll;
+  margin-bottom: -61px;
+  padding: 30px;
+}
+
+.content {
+  padding-bottom: 30px;
+}
+
+.section-header {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.nilai {
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.nilai span {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.btn-refresh {
+  margin: 5px;
+}
+
+.back-icon {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  z-index: 0;
+}
+
+.back-icon img {
+  width: 80px;
+  height: 60px;
+  opacity: 0.7;
+}
+
+form label {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center
+}
+
+.my-table p, .my-table li {
+  font-size: 12px;
+}
+
+/* .sidebar-background {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+} */

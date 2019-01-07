@@ -1,0 +1,202 @@
+<template class="task-template">
+  <section id="kasir-section" class="section js-section u-category-kasir">
+    <div class="section-wrapper">
+      <!-- <div class="section-header">KASIR</div> -->
+      <div class="row">
+        <div id="notifBon" class="col-md-12 hidden">
+          <div class="alert alert-warning alert-dismissible" role="alert">
+            <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+            <strong>Konsunem dengan NIK <span id="notifNik"></span></strong>, Masih ada sisa pembayaran yang belum dilunasi
+          </div>
+        </div>
+        <div class="col-sm-7">
+          <div class="card">
+
+            <div class="content">
+
+              <form class="form-horizontal">
+
+                <div class="form-group">
+                  <label for="" class="col-sm-4 control-label">NIK</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="nik" placeholder="NIK">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="" class="col-sm-4 control-label">NAMA PEMBELI</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="namaPembeli" placeholder="Nama">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="" class="col-sm-4 control-label">Metode Pembayaran</label>
+                  <div class="col-sm-8">
+                    <select id="metodePembayaran" class="form-control">
+                      <option value=""></option>
+                      <option value="1">Lunas</option>
+                      <option value="2">Cicil</option>
+                      <option value="3">Pasca Panen</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="" class="col-sm-4 control-label">Pesanan</label>
+                  <div class="col-sm-8">
+                    <!-- <input type="text" class="form-control" id="namaBarang" placeholder="Nama Barang"> -->
+                    <select id="jenisBarang" class="form-control">
+                      
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="" class="col-sm-4 control-label">Jumlah BARANG</label>
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" id="jumlahPesanan" placeholder="Jumlah Barang" value="0">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="" class="col-sm-4 control-label">Satuan BARANG</label>
+                  <div class="col-sm-8">
+                    <select id="satuanBarang" class="form-control">
+                      <option value=""></option>
+                      <option value="Kg">Kg</option>
+                      <option value="Galon">Galon</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div id="jmlhPembayaran" class="form-group hidden">
+                  <label for="" class="col-sm-4 control-label">Jumlah Pembayaran</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="jumlahPembayaran" placeholder="Jumlah Pembayaran" value="">
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <div class="col-sm-offset-4 col-sm-8">
+                    <button type="button" id="cancel" class="btn btn-default btn-fill">Batal</button>
+                    <button type="button" id="simpanPenjualan" class="btn btn-primary btn-fill">Simpan</button>
+                  </div>
+                </div>
+                <!-- <div class="form-group">
+                  <label for="" class="col-sm-4 control-label">Status Pembayaran</label>
+                  <div class="col-sm-8">
+                    <select id="" class="form-control">
+                      <option value="Lunas">Lunas</option>
+                      <option value="Belum Lunas">Belum Lunas</option>
+                    </select>
+                  </div>
+                </div> -->
+                
+              </form>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-sm-5">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="header">
+                  <p class="category"><strong>Total Bayar</strong> </p>
+                </div>
+                <div class="content">
+                  <div><strong>Rp.<span id="totalBayar"></span></strong></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="card">
+                <div class="header">
+                  <p class="category"><strong>Total Harga</strong> </p>
+                </div>
+                <div class="content">
+                  <div><strong>Rp.<span id="totalHargaKasir"></span></strong></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card">
+                  <div class="header">
+                    <p class="category"><strong>Sisa Pembayaran</strong> </p>
+                  </div>
+                  <div class="content">
+                    <div><strong>Rp.<span id="sisaPembayaran">0</span></strong></div>
+                  </div>
+                </div>
+              </div>
+
+            <div class="col-md-12">
+                <div class="card">
+                  <div class="header">
+                    <p class="category"><strong>Info Konsumen</strong> </p>
+                  </div>
+                  <div class="content">
+                    <div class="row">
+                      <div class="col-md-2"><strong>NIK</strong></div>
+                      <div class="col-md-10">: <strong id="nikInfo"></strong></div>
+                      <!-- <div class="col-md-12"><strong>List Barang</strong></div> -->
+                      
+                    </div>
+                  </div>
+                  <table class="table table-hover table-striped" id="tb-kuota">
+                    <thead>
+                      <th>Jenis Pupuk</th>
+                      <th>Kuota / 30 hari</th>
+                      <th>Total Beli</th>
+                      <th>Sisa Kuota</th>
+                      <th>Berakhir Tgl</th>
+                    </thead>
+                    <tbody>
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+          </div>
+          
+        </div>
+
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="header">
+              <p class="category"><strong>Transaksi</strong> </p>
+            </div>
+            <div class="content">
+              <table class="table table-hover table-striped" id="data-penjualan" width="100%">
+                <thead>
+                  <th>No.</th>
+                  <th>Tanggal</th>
+                  <th>Nama Pembeli</th>
+                  <th>Nik</th>
+                  <th>Nama Barang</th>
+                  <th>Jumlah Barang</th>
+                  <th>Harga Barang</th>
+                  <th>Total Bayar</th>
+                  <th>Metode</th>
+                  <th>Status</th>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+</template>
+<script>
+  require('./render-process/render-kasir.js')
+</script>

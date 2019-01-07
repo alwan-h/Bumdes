@@ -1,0 +1,163 @@
+<template class="task-template">
+	<section id="inputgudang-section" class="section js-section u-category-inputgudang">
+		<div class="section-wrapper">
+			<!-- <div class="section-header">GUDANG</div> -->
+			<div class="row">
+
+				<div class="col-md-8">
+					<div class="card">
+						<div class="header">
+							<p class="category"><strong>Tambah Data Pembelian Pupuk</strong> </p>
+						</div>
+						<div class="content">
+								
+						<form class="form-horizontal" id="formInsertPupuk">
+							<div class="form-group">
+								<label for="namaBarang" class="col-sm-3 control-label">Jenis Pupuk</label>
+								<div class="col-sm-9">
+									<!-- <input type="text" class="form-control" id="namaBarang" placeholder="Nama Barang"> -->
+									<select id="jenisPupuk" class="form-control" name="barang_list_nama">
+										<option value=""></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-sm-3 control-label">Jumlah</label>
+								<div class="col-sm-9">
+									<!-- <input type="text" class="form-control" id="" placeholder="Jumlah Barang"> -->
+									<div class="input-group">
+										<input type="text" id="jumlahBarang" class="form-control" placeholder="Jumlah" aria-describedby="basic-addon2" name="barang_list_jumlah">
+										<span class="input-group-addon" id="basic-addon2">Kg</span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-sm-3 control-label">Harga Beli / Kg</label>
+								<div class="col-sm-9">
+										<div class="input-group">
+												<span class="input-group-addon" id="basic-addon2">Rp</span>
+												<input type="text" id="hargaBeliBarang" class="form-control" placeholder="Harga Beli / Kg" aria-describedby="basic-addon2" name="barang_list_harga_beli">
+											</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-sm-3 control-label">Total Harga Beli</label>
+								<div class="col-sm-9">
+									<!-- <input type="text" class="form-control" id="" placeholder="Jumlah Barang"> -->
+									Rp. <span id="totalHargaBeli"></span>
+									<input type="hidden" id="totalHargaBeli" name="barang_list_total_harga_beli">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-9">
+									<button type="button" id="simpanBeliBarang" class="btn btn-primary btn-fill">Simpan</button>
+								</div>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="row">
+						<!-- <div class="col-sm-12 btn-margin-bottom">
+							<button class="btn btn-primary btn-fill btn-block" data-toggle="modal" data-target="#pupuk_modal">Tambah Jenis Pupuk</button>
+						</div> -->
+
+							<div class="col-sm-12">
+								<div class="card">
+									<div class="header">
+										<p class="category"><strong>Jenis Pupuk</strong> </p>
+									</div>
+									
+									<table class="table table-hover table-striped" id="table-jenis-pupuk">
+										<thead>
+											<th>No.</th>
+											<th>Jenis Pupuk</th>
+											<!-- <th>Edit</th> -->
+										</thead>
+										<tbody>
+											
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+
+							<!-- <div class="col-sm-12">
+								<div class="card">
+									<div class="header">
+										<p class="category"><strong>Total Pembelian Pupuk</strong> </p>
+									</div>
+									<div class="content">
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="nilai">1000 <span>Kg</span></div>
+												<div class="back-icon">
+													<img src="./assets/img/bar-chart.png" alt="">
+												</div>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-12">
+									<div class="card">
+										<div class="header">
+											<p class="category"><strong>Total Penjualan Pupuk</strong> </p>
+										</div>
+										<div class="content">
+											<div class="row">
+												<div class="col-sm-12">
+													<div class="nilai">1000 <span>Kg</span></div>
+													<div class="back-icon">
+															<img src="./assets/img/bar-chart-2.png" alt="">
+														</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div> -->
+					</div>
+				</div>
+
+				
+
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+
+					<div class="card">
+						<div class="header">
+							<p class="category"><strong>Transaksi</strong> </p>
+						</div>
+						<div class="content">
+						
+							<br>
+							
+							<table class="table table-hover table-striped" id="table-pupuk-gudang" width="100%">
+								<thead>
+									<th>No.</th>
+									<th style="width:40%">Nama Barang</th>
+									<th>Jumlah</th>
+									<th>Harga Beli</th>
+									<th>Tanggal Beli</th>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+</template>
+			
+<script>
+	require('./render-process/render-gudang.js')
+</script>

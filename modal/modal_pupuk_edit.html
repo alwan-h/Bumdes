@@ -1,0 +1,45 @@
+<div class="modal fade" id="pupuk_modal_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="pupuk_modal_title">Modal User</h4>
+      </div>
+      <div class="modal-body" id="pupuk_modal_body">
+        <div class="row">
+          <div class="col-md-12">
+            <form>
+        
+              <div class="form-group">
+                <label for="nama_pupuk">Jenis Pupuk</label>
+                <input type="text" class="form-control" placeholder="Nama Pupuk" id="edit_nama_pupuk">
+              </div>
+
+              <div class="form-group">
+                <label for="">Harga Jual</label>
+                <input type="text" class="form-control" placeholder="Harga Jual" id="edit_harga_jual">
+              </div>
+
+              <div class="form-group">
+                <label for="">Kuota / Orang</label>
+                <input type="text" class="form-control" placeholder="Kuota" id="edit_kuota">
+              </div>
+
+              <input type="hidden" id="edit_pupuk_id">
+              
+              <div class="footer-btn pull-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary" id="edit_data_pupuk">Simpan</button>
+              </div>
+        
+            </form>
+          </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<script>
+  require('./render-process/render-pupuk-edit.js')
+</script>
