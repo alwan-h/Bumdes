@@ -25,6 +25,9 @@
     "productName": "Bumdes Maju Bersama",
     "extraResources": [
       "./database.sqlite3"
-    ]
+    ],
+    "nsis":{
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
