@@ -18,7 +18,7 @@ let userLevel
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600 })
+  win = new BrowserWindow({ width: 800, height: 600, icon: path.join(__dirname, './assets/img/icon.png') })
 
   // and load the index.html of the app.
   win.loadFile('index.html')

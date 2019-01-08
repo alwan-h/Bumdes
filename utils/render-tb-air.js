@@ -1,4 +1,39 @@
+const barang = require('./barang.js')
 const penjualan = require('./penjualan.js')
+
+exports.renderTbAir = () => {
+  let tableAir = $('#table-air-data tbody')
+  var param = {category: 2} 
+  barang.getBarang(param).then(data => {
+    console.log('data air', data)
+    tableAir.empty()
+    var i = 1
+    data.map((air, index) => {
+      if (air.barang_category == '2') {
+        tableAir.append(
+          '<tr>'+
+            `<td>${i++}</td>`+
+            `<td>${air.barang_nama}</td>`+
+            `<td>Rp. ${air.barang_harga_jual}</td>`+
+            `<td><button class="btn btn-default btn-xs btn-edit-harga-air" data-id="${air.barang_id}" data-harga="${air.barang_harga_jual}" data-toggle="modal" data-target="#air_modal_edit">Edit</button> `+
+            // `<button class="btn btn-danger btn-xs btn-delete-penj-pupuk" data-id="${air.barang_id}">Delete</button></td>`+
+          '</tr>'
+        )
+      }
+    })
+
+    btnEditAir()
+  })
+}
+
+function btnEditAir() {
+  $('.btn-edit-harga-air').click(function() {
+    var idAir = $(this).attr('data-id')
+    var hargaAir = $(this).attr('data-harga')
+    $('#harga_jual_air').val(hargaAir)
+    $('#edit_air_id').val(idAir)
+  })
+}
 
 exports.renderTbPenjulanAir = () => {
   let tableAirPenjulan = $('#table-air-penjualan')

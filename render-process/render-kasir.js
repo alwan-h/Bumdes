@@ -1,12 +1,14 @@
 const {ipcRenderer} = require('electron')
 
 const penjualan = require('../utils/penjualan.js')
+const barang = require('../utils/barang.js')
 const tbKasir = require('../utils/render-tb-kasir.js')
 const pupuk = require('../utils/render-tb-pupuk.js')
 const panelBeranda = require('../utils/render-panel-beranda.js')
 const renderTbAir = require('../utils/render-tb-air.js')
 const konsumen = require('../utils/konsumen.js')
 const renderChart = require('../utils/render-chart.js')
+const gudang = require('../utils/render-tb-gudang.js')
 
 // require('events').EventEmitter.prototype._maxListeners = 100;
 
@@ -181,12 +183,27 @@ $(document).ready(function() {
   function getPesanan() {
     // pesanan.empty()
     var param = {category: null}
-    ipcRenderer.send('get-barang', param)
-    ipcRenderer.on('data-barang', (event, arg) => {
+    // ipcRenderer.send('get-barang', param)
+    // ipcRenderer.on('data-barang', (event, arg) => {
+    //   jenisBarang.empty()
+    //   jenisBarang.append('<option></option>')
+    //   console.log('data barang kasir', arg)
+    //   arg.map(barang => {
+    //     if (barang.barang_stock != 0) {
+    //       jenisBarang.append(
+    //         `<option value="${barang.barang_id}" data-harga="${barang.barang_harga_jual}" data-nama="${barang.barang_nama}">${barang.barang_nama}</option>`
+    //       )
+    //     }
+        
+    //   })
+      
+    // })
+
+    barang.getBarang(param).then(data => {
       jenisBarang.empty()
       jenisBarang.append('<option></option>')
-      //console.log('data barang kasir', arg)
-      arg.map(barang => {
+      console.log('data barang kasir', data)
+      data.map(barang => {
         if (barang.barang_stock != 0) {
           jenisBarang.append(
             `<option value="${barang.barang_id}" data-harga="${barang.barang_harga_jual}" data-nama="${barang.barang_nama}">${barang.barang_nama}</option>`
@@ -194,7 +211,6 @@ $(document).ready(function() {
         }
         
       })
-      
     })
   }
 
@@ -235,6 +251,8 @@ $(document).ready(function() {
         dataPenjualan.push($('option:selected', metodePembayaran).attr('data-nama'))
         tbKasir.renderTbPenjualan()
         pupuk.renderTbPenjualan()
+        pupuk.renderTbPupuk()
+        gudang.renderTbGudang()
         panelBeranda.renderPanelPenjualan()
         renderTbAir.renderTbPenjulanAir()
         showNotaModal(dataPenjualan)

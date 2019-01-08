@@ -1,4 +1,33 @@
 const pembelian = require('./pembelian.js')
+const barang = require('./barang.js')
+
+exports.renderJenisPupuk = () => {
+  var param = {category: 1}
+  let tableJenisPupuk = $('#table-jenis-pupuk tbody')
+  let jenisPupuk = $('#jenisPupuk')
+  //return new Promise((resolve, reject) => {
+    barang.getBarang(param).then(arg => {
+      tableJenisPupuk.empty()
+      jenisPupuk.empty()
+      jenisPupuk.append('<option value="">Pilih Jenis Pupuk</option>')
+      //console.log(arg)
+      arg.map((jenis, index) => {
+        if (jenis.barang_category == 1) { 
+          jenisPupuk.append(
+            '<option value="'+jenis.barang_id+'">'+jenis.barang_nama+'</option>'
+          )
+          tableJenisPupuk.append(
+            `<tr>`+
+              `<td>${index+1}</td>`+
+              `<td>${jenis.barang_nama}</td>`+
+              // `<td><button class="btn btn-default btn-xs">Edit</button></td>`+
+            `</tr>`
+          )
+        }
+      })
+    }) 
+  //})
+}
 
 exports.renderTbGudang = () => {
   let tablePupuk = $('#table-pupuk-gudang')

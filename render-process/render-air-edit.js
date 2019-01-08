@@ -1,4 +1,6 @@
 const {ipcRenderer} = require('electron')
+const barang = require('../utils/barang.js')
+const renderTbAir = require('../utils/render-tb-air.js')
 
 $(document).ready(function() {
   var btnEditAir = $('#edit_data_air')
@@ -14,14 +16,21 @@ $(document).ready(function() {
   function editDataAir() {
     // console.log('send air')
     var dataSend = [hargaJualAir.val(), idAir.val()]
-    ipcRenderer.send('edit-harga-air', dataSend)
-    ipcRenderer.on('notif-edit-air', (event, arg) => {
-      if (arg) {
-        $('#air_modal_edit').modal('hide')
-        var param = {category: null} 
-        ipcRenderer.send('get-barang', param)
-      }
+    // ipcRenderer.send('edit-harga-air', dataSend)
+    // ipcRenderer.on('notif-edit-air', (event, arg) => {
+    //   if (arg) {
+    //     $('#air_modal_edit').modal('hide')
+    //     var param = {category: null} 
+    //     ipcRenderer.send('get-barang', param)
+    //   }
       
+    // })
+
+    barang.updateHargaAir(dataSend).then(data => {
+      if (data) {
+        $('#air_modal_edit').modal('hide')
+        renderTbAir.renderTbAir()
+      }
     })
   }
 })

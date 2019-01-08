@@ -21,7 +21,7 @@ exports.renderPupukChart = () => {
           labels: setDataChart(bulan),
           datasets: [
             {
-              label: "Pupuk",
+              label: "Pupuk (Kg)",
               backgroundColor: 'rgba(255, 99, 132, 0.2)',
               borderColor: 'rgba(255, 99, 132, 1)',
               data: setDataChart(dataPupuk),
@@ -54,7 +54,7 @@ exports.renderAirChart = () => {
           labels: setDataChart(bulan),
           datasets: [
             {
-              label: "Air Isi Ulang",
+              label: "Air Isi Ulang (Galon)",
               backgroundColor: 'rgba(54, 162, 235, 0.2)',
               borderColor: 'rgba(54, 162, 235, 1)',
               data: setDataChart(dataKeuntungan),

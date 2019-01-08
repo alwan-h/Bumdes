@@ -39,11 +39,12 @@ $(document).ready(function() {
   //console.log(today())
 
   // renderTableJenisPupuk()
-  renderJenisPupuk()
+  //renderJenisPupuk()
   //getListBarang()
   //getPembelian()
 
   //renderPupuk.renderTbPupuk()
+  gudang.renderJenisPupuk()
   renderPupuk.renderTbPembelian()
 
   gudang.renderTbGudang()

@@ -5,7 +5,8 @@ $(document).ready(function() {
 
   let tableAir = $('#table-air-data tbody')
 
-  renderTableAir()
+  //renderTableAir()
+  renderTbAir.renderTbAir()
   renderTbAir.renderTbPenjulanAir()
 
   function renderTableAir() {

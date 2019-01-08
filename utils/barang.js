@@ -69,3 +69,18 @@ exports.getStock = () => {
     })
   })
 }
+
+exports.updateHargaAir = (arg) => {
+  let query = 'UPDATE tb_barang SET barang_harga_jual = ? WHERE barang_id = ?'
+  return new Promise((resolve, reject) => {
+    db.run(query, arg, (err, result) => {
+      if (err) {
+        console.log(err)
+        reject(err)
+      } else {
+        //event.sender.send('notif-edit-air', true)
+        resolve(true)
+      }
+    })
+  })
+}

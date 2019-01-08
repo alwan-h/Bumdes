@@ -4,7 +4,7 @@ body {
 .hero {
   width: 100%;
   height: 100vh;
-  background-image: url('../../assets/img/full-screen-image-3.jpg');
+  background-image: url('../../assets/img/sidebar-6.jpg');
   z-index: 1;
   display: block;
 }
@@ -12,11 +12,33 @@ body {
   width: 100%;
   height: 100vh;
   z-index: 2;
-  display: block;
+  display: flex;
   position: absolute;
-  background: #0ec8e0;
+  background: #1abc9c;
   opacity: 0.8;
+  justify-content: center;
+  align-items: center;
 }
+
+.logo-container {
+  width: 100%;
+  height: 100vh;
+  z-index: 3;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-cont {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
 .login-panel {
   width: 100%;
   height: 100vh;
@@ -27,4 +49,11 @@ body {
 }
 .login-panel h2, .login-panel h4 {
   text-align: center;
+}
+
+.login-header {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 15px;
 }
