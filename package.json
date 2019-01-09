@@ -26,6 +26,10 @@
     "extraResources": [
       "./database.sqlite3"
     ],
+    "win": {
+      "target": "nsis",
+      "icon": "./assets/icon/favicon.ico"
+    },
     "nsis":{
       "allowToChangeInstallationDirectory": true
     }
