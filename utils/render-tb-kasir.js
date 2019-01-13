@@ -1,5 +1,6 @@
 //const Promise = require('bluebird')
 const penjualan = require('../utils/penjualan.js')
+const barang = require('./barang.js')
 
 exports.renderTbPenjualan = () => {
 
@@ -71,4 +72,22 @@ exports.renderTbPenjualan = () => {
       tmpTbPenjualan.draw()
 
     })
+}
+
+exports.renderJenisBarang = () => {
+  var jenisBarang = $('#jenisBarang')
+  var param = {category: null}
+  barang.getBarang(param).then(data => {
+    jenisBarang.empty()
+    jenisBarang.append('<option></option>')
+    console.log('data barang kasir', data)
+    data.map(barang => {
+      if (barang.barang_stock != 0) {
+        jenisBarang.append(
+          `<option value="${barang.barang_id}" data-harga="${barang.barang_harga_jual}" data-nama="${barang.barang_nama}">${barang.barang_nama}</option>`
+        )
+      }
+      
+    })
+  })
 }

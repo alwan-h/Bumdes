@@ -9,6 +9,7 @@ const renderTbAir = require('../utils/render-tb-air.js')
 const konsumen = require('../utils/konsumen.js')
 const renderChart = require('../utils/render-chart.js')
 const gudang = require('../utils/render-tb-gudang.js')
+const nota = require('../utils/nota')
 
 // require('events').EventEmitter.prototype._maxListeners = 100;
 
@@ -67,7 +68,8 @@ $(document).ready(function() {
     }
   })
 
-  getPesanan()
+  //getPesanan()
+  tbKasir.renderJenisBarang()
   getMetode()
   //getPenjualan()
   tbKasir.renderTbPenjualan()
@@ -77,6 +79,7 @@ $(document).ready(function() {
     var harga = $('option:selected', this).attr('data-harga')
     //console.log(harga)
     setTotalBayar(harga)
+    satuanBarang.text(setSatuan())
   })
 
   metodePembayaran.change(function() {
@@ -221,6 +224,14 @@ $(document).ready(function() {
     return 'Lunas'
   }
 
+  function setSatuan() {
+    if (jenisBarang.val() == 5) {
+      return 'Galon'
+    } else {
+      return 'Kg'
+    }
+  }
+
   function simpanPenjualan() {
     console.log('total bayar', totalBayar.text())
     var dataPenjualan = [
@@ -229,7 +240,7 @@ $(document).ready(function() {
       jenisBarang.val(),
       jumlahBarang.val(),
       totalHargaKasir.text(),
-      satuanBarang.val(),
+      setSatuan(),
       metodePembayaran.val(),
       setStatusPembayaran(),
       today(),
@@ -244,25 +255,31 @@ $(document).ready(function() {
     console.log('data', dataPenjualan)
 
     penjualan.insertPenjualan(wrapData).then(data => {
-      console.log(data)
-      if (data) {
+      console.log('id last insert',data)
+      if (data > 0) {
         console.log('insert oke')
         //getPenjualan()
-        dataPenjualan.push($('option:selected', metodePembayaran).attr('data-nama'))
-        tbKasir.renderTbPenjualan()
-        pupuk.renderTbPenjualan()
-        pupuk.renderTbPupuk()
-        gudang.renderTbGudang()
-        panelBeranda.renderPanelPenjualan()
-        renderTbAir.renderTbPenjulanAir()
-        showNotaModal(dataPenjualan)
-        clearValue()
-        renderChart.setGrafikPupuk()
-        renderChart.setGrafikAir()
-        renderPanel.renderPanelStock()
-        renderPanel.renderPanelPiutang()
-        renderChart.setGrafikPupuk()
-        renderChart.setGrafikAir()
+        var dataNota = [data, dataPenjualan[4], dataPenjualan[9], dataPenjualan[9], today()]
+        nota.insertNota(dataNota).then(() => {
+          showNotaModal(dataPenjualan)
+          clearValue()
+          dataPenjualan.push($('option:selected', metodePembayaran).attr('data-nama'))
+          tbKasir.renderTbPenjualan()
+          pupuk.renderTbPenjualan()
+          pupuk.renderTbPupuk()
+          gudang.renderTbGudang()
+          panelBeranda.renderPanelPenjualan()
+          renderTbAir.renderTbPenjulanAir()
+          
+          renderChart.setGrafikPupuk()
+          renderChart.setGrafikAir()
+          panelBeranda.renderPanelStock()
+          panelBeranda.renderPanelPiutang()
+          renderChart.setGrafikPupuk()
+          renderChart.setGrafikAir()
+        })
+        
+        
       }
     })
   }
@@ -272,14 +289,14 @@ $(document).ready(function() {
     if (sisaPembayarang.text() == '0') {
       statusPembayaran = 'Lunas'
     }
-    var arg = [totalBayar.text(), statusPembayaran, idPenjualan]
+    var arg = [totalBayar.text(), statusPembayaran, today(), idPenjualan]
     var dataPenjualan = [
       namaPembeli.val(),
       nik.val(),
       jenisBarang.val(),
       jumlahBarang.val(),
       totalHargaKasir.text(),
-      satuanBarang.val(),
+      setSatuan(),
       metodePembayaran.val(),
       setStatusPembayaran,
       today(),
@@ -288,20 +305,25 @@ $(document).ready(function() {
     penjualan.updatePenjualan(arg).then(data => {
       if (data) {
         console.log('insert oke')
-        //getPenjualan()
-        dataPenjualan.push($('option:selected', metodePembayaran).attr('data-nama'))
-        tbKasir.renderTbPenjualan()
-        pupuk.renderTbPenjualan()
-        panelBeranda.renderPanelPenjualan()
-        renderTbAir.renderTbPenjulanAir()
-        showNotaModal(dataPenjualan)
-        clearValue()
-        renderChart.setGrafikPupuk()
-        renderChart.setGrafikAir()
-        renderPanel.renderPanelStock()
-        renderPanel.renderPanelPiutang()
-        renderChart.setGrafikPupuk()
-        renderChart.setGrafikAir()
+        var dataNota = [idPenjualan, dataPenjualan[4], jumlahPembayaran.val(), dataPenjualan[9], today()]
+        nota.insertNota(dataNota).then(() => {
+          //getPenjualan()
+          dataPenjualan.push($('option:selected', metodePembayaran).attr('data-nama'))
+          tbKasir.renderTbPenjualan()
+          pupuk.renderTbPenjualan()
+          panelBeranda.renderPanelPenjualan()
+          renderTbAir.renderTbPenjulanAir()
+          showNotaModal(dataPenjualan)
+          clearValue()
+          renderChart.setGrafikPupuk()
+          renderChart.setGrafikAir()
+          panelBeranda.renderPanelStock()
+          panelBeranda.renderPanelPiutang()
+          renderChart.setGrafikPupuk()
+          renderChart.setGrafikAir()
+        })
+        
+        
       }
     })
   }

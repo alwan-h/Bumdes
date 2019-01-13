@@ -4,6 +4,7 @@ const cons = require('../assets/constanta.js')
 const dbPath = path.resolve(__dirname, cons.uriDb)
 const db = new sqlite3.Database(dbPath)
 const konsumen = require('./konsumen.js')
+const nota = require('./nota')
 
 const Promise = require('bluebird')
 
@@ -36,19 +37,27 @@ exports.insertPenjualan = (arg) => {
               console.log(err)
               reject(err)
             } else {
-              if (idBarang != 5) {
-                let queryUpdateStock = 'UPDATE tb_barang SET barang_stock = ? WHERE barang_id = ?'
-                db.run(queryUpdateStock, [stock, idBarang], (err, result) => {
-                  if (err) {
-                    console.log(err)
-                  } else {
-                    insertKonsumen(param)
-                    resolve(true)
-                  }
-                })
-              } else {
-                resolve(true)
-              } 
+              getLastId().then(id => {
+
+                // nota.insertNota(dataNota).then(() => {
+                  
+                // })
+                if (idBarang != 5) {
+                  let queryUpdateStock = 'UPDATE tb_barang SET barang_stock = ? WHERE barang_id = ?'
+                  db.run(queryUpdateStock, [stock, idBarang], (err, result) => {
+                    if (err) {
+                      console.log(err)
+                    } else {
+                      insertKonsumen(param)
+                      resolve(id)
+                    }
+                  })
+                } else {
+                  resolve(id)
+                } 
+
+              })
+              
             }
             
           })
@@ -77,7 +86,7 @@ exports.getPenjualan = (arg) => {
   }
   // event.sender.setMaxListeners(100)
 
-  query += ' ORDER BY tb_penjualan.penjualan_id DESC'
+  query += ' ORDER BY date(tb_penjualan.penjualan_insert_tanggal) DESC'
 
   return new Promise((resolve, reject) => {
     db.all(query, (err, result) => {
@@ -126,14 +135,16 @@ exports.totalPenjualan = () => {
 }
 
 exports.updatePenjualan = (arg) => {
-  let query = 'UPDATE tb_penjualan SET penjualan_total_bayar = ?, penjualan_status_pembayaran = ? WHERE penjualan_id = ?'
+  let query = 'UPDATE tb_penjualan SET penjualan_total_bayar = ?, penjualan_status_pembayaran = ?, penjualan_insert_tanggal = ? WHERE penjualan_id = ?'
   return new Promise((resolve, reject) => {
     db.run(query, arg, (err, result) => {
       if (err) {
         console.log(err)
         reject(err)
       } else {
-        resolve(true)
+        //getLastId().then(id => {
+          resolve(true)
+        //})
       }
     })
   })
@@ -227,4 +238,19 @@ function today(addDay) {
   date.setDate(date.getDate() + addDay); // Set now + 30 days as the new date
   //console.log(date.toISOString().slice(0, 10));
   return date.toISOString().slice(0, 10)
+}
+
+function getLastId() {
+  let query = 'SELECT penjualan_id FROM tb_penjualan ORDER BY penjualan_id DESC limit 1'
+  return new Promise((resolve, reject) => {
+    db.all(query, (err, result) => {
+      if (err) {
+        console.log(err)
+        reject(err)
+      } else {
+        console.log('last id', result[0].penjualan_id)
+        resolve(result[0].penjualan_id)
+      }
+    })
+  })
 }

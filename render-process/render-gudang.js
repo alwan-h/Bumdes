@@ -1,10 +1,11 @@
 const {ipcRenderer} = require('electron')
-const { BrowserWindow } = require('electron').remote
-const path = require('path')
+//const { BrowserWindow } = require('electron').remote
+//const path = require('path')
 const pembelian = require('../utils/pembelian.js')
 const renderPanel = require('../utils/render-panel-beranda.js')
 const gudang = require('../utils/render-tb-gudang.js')
 const renderPupuk = require('../utils/render-tb-pupuk')
+const renderKasir = require('../utils/render-tb-kasir')
 //const PDFWindow = require('electron-pdf-window')
 
 $(document).ready(function() {
@@ -14,12 +15,12 @@ $(document).ready(function() {
   let hargaBeliPupuk = $('#hargaBeliBarang')
   let totalHargaBeliPupuk = $('#totalHargaBeli')
   let simpanBeliBarang = $('#simpanBeliBarang')
-  let tablePupukGudang = $('#table-pupuk-gudang tbody')
+  //let tablePupukGudang = $('#table-pupuk-gudang tbody')
   let tableJenisPupuk = $('#table-jenis-pupuk tbody')
-  let dataPupuk
+  //let dataPupuk
   
 
-  let tablePupuk = $('#table-pupuk-gudang')
+  //let tablePupuk = $('#table-pupuk-gudang')
 
   // let today = () => {
   //   let date = new Date()
@@ -83,6 +84,7 @@ $(document).ready(function() {
         gudang.renderTbGudang()
         renderPupuk.renderTbPupuk()
         renderPupuk.renderTbPembelian()
+        renderKasir.renderJenisBarang()
         clearInput()
       }
     })
@@ -94,30 +96,30 @@ $(document).ready(function() {
     totalHargaBeliPupuk.text('')
   }
 
-  function renderJenisPupuk() {
-    var param = {category: 'Pupuk'} 
-    ipcRenderer.send('get-barang', param)
-    ipcRenderer.on('data-barang', (event, arg) => {
-      tableJenisPupuk.empty()
-      jenisPupuk.empty()
-      jenisPupuk.append('<option value="">Pilih Jenis Pupuk</option>')
-      //console.log(arg)
-      arg.map((jenis, index) => {
-        if (jenis.barang_category == 1) { 
-          jenisPupuk.append(
-            '<option value="'+jenis.barang_id+'">'+jenis.barang_nama+'</option>'
-          )
-          tableJenisPupuk.append(
-            `<tr>`+
-              `<td>${index+1}</td>`+
-              `<td>${jenis.barang_nama}</td>`+
-              // `<td><button class="btn btn-default btn-xs">Edit</button></td>`+
-            `</tr>`
-          )
-        }
-      })
-    })
-  }
+  // function renderJenisPupuk() {
+  //   var param = {category: 'Pupuk'} 
+  //   ipcRenderer.send('get-barang', param)
+  //   ipcRenderer.on('data-barang', (event, arg) => {
+  //     tableJenisPupuk.empty()
+  //     jenisPupuk.empty()
+  //     jenisPupuk.append('<option value="">Pilih Jenis Pupuk</option>')
+  //     //console.log(arg)
+  //     arg.map((jenis, index) => {
+  //       if (jenis.barang_category == 1) { 
+  //         jenisPupuk.append(
+  //           '<option value="'+jenis.barang_id+'">'+jenis.barang_nama+'</option>'
+  //         )
+  //         tableJenisPupuk.append(
+  //           `<tr>`+
+  //             `<td>${index+1}</td>`+
+  //             `<td>${jenis.barang_nama}</td>`+
+  //             // `<td><button class="btn btn-default btn-xs">Edit</button></td>`+
+  //           `</tr>`
+  //         )
+  //       }
+  //     })
+  //   })
+  // }
 
   function kalkulasiTotalHarga() {
     let totalHarga = jumlahPupuk.val() * hargaBeliPupuk.val()
