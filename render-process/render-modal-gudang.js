@@ -1,17 +1,21 @@
 const {ipcRenderer} = require('electron')
+const barang = require('../utils/barang')
+const tb_gudang = require('../utils/render-tb-gudang')
+const renderPupuk = require('../utils/render-tb-pupuk')
 
 $(document).ready(function() {
 
   $('#simpan_nama_pupuk').click(function(e) {
     e.preventDefault()
     var namaPupuk = $('#nama_pupuk')
-    //console.log(namaPupuk.val())
-    ipcRenderer.send('insert-barang', [namaPupuk.val(), 'Pupuk'])
-    ipcRenderer.on('notif-barang', (event, arg) => {
-      //console.log(arg)
-      if (arg) {
+    
+    barang.insertBarang([namaPupuk.val(), '1']).then((data) => {
+      if (data) {
+        // renderJenisPupuk()
         $('#pupuk_modal').modal('hide')
-        renderJenisPupuk()
+        namaPupuk.val('')
+        tb_gudang.renderJenisPupuk()
+        renderPupuk.renderTbPupuk()
       }
     })
   })

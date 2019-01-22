@@ -86,7 +86,7 @@ exports.getPenjualan = (arg) => {
   }
   // event.sender.setMaxListeners(100)
 
-  query += ' ORDER BY date(tb_penjualan.penjualan_insert_tanggal) DESC'
+  query += ' ORDER BY date(tb_penjualan.penjualan_insert_tanggal) DESC, penjualan_id DESC'
 
   return new Promise((resolve, reject) => {
     db.all(query, (err, result) => {
@@ -113,6 +113,20 @@ exports.getPenjualanByNik = (arg) => {
       } else {
         console.log('listener data penjualan')
         resolve(result)
+      }
+    })
+  })
+}
+
+exports.getPenjualanByBarang = (arg) => {
+  let query = `SELECT * FROM tb_penjualan WHERE penjualan_status_pembayaran = "Belum" AND penjualan_nama_barang = ?`
+  return new Promise((resolve, reject) => {
+    db.all(query, arg, (err, data) => {
+      if (err) {
+        console.log(err)
+        reject(err)
+      } else {
+        resolve(data)
       }
     })
   })

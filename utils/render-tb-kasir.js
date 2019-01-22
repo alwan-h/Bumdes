@@ -82,7 +82,7 @@ exports.renderJenisBarang = () => {
     jenisBarang.append('<option></option>')
     console.log('data barang kasir', data)
     data.map(barang => {
-      if (barang.barang_stock != 0) {
+      if (barang.barang_stock != 0 || barang.barang_stock != '') {
         jenisBarang.append(
           `<option value="${barang.barang_id}" data-harga="${barang.barang_harga_jual}" data-nama="${barang.barang_nama}">${barang.barang_nama}</option>`
         )

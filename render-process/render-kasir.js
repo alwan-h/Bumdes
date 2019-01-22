@@ -10,6 +10,8 @@ const konsumen = require('../utils/konsumen.js')
 const renderChart = require('../utils/render-chart.js')
 const gudang = require('../utils/render-tb-gudang.js')
 const nota = require('../utils/nota')
+const newKonsumen = require('../utils/new-konsumen')
+const kuota = require('../utils/kuota')
 
 // require('events').EventEmitter.prototype._maxListeners = 100;
 
@@ -33,13 +35,14 @@ $(document).ready(function() {
   var jumlahPembayaran = $('#jumlahPembayaran')
   var jmlhPembayaran = $('#jmlhPembayaran')
   var cancel = $('#cancel')
+  var namaInfo = $('#namaInfo')
   var statusPembayaran
   var update = false
   var bayarOld
   var kasirOld
   var idPenjualan
 
-  let today = () => {
+  let today = (arg) => {
     // let date = new Date()
     // let day = date.setDate(date.getDate() + 30)
     // let month = date.getMonth() + 1
@@ -50,10 +53,11 @@ $(document).ready(function() {
     var date = new Date(); // Now
     date.setDate(date.getDate()); // Set now + 30 days as the new date
     //console.log(date.toISOString().slice(0, 10));
+    date.setFullYear(date.getFullYear() + arg)
     return date.toISOString().slice(0, 10)
   }
 
-  console.log(today())
+  console.log(today(0))
   
 
   //var date = new Date(); // Now
@@ -77,9 +81,11 @@ $(document).ready(function() {
 
   jenisBarang.change(function() {
     var harga = $('option:selected', this).attr('data-harga')
+    var jenis = $('option:selected', this).val()
     //console.log(harga)
     setTotalBayar(harga)
     satuanBarang.text(setSatuan())
+    setNotifBon(jenis)
   })
 
   metodePembayaran.change(function() {
@@ -111,28 +117,91 @@ $(document).ready(function() {
   nik.keyup(function() {
     var param = {nik: $(this).val()}
     $('#nikInfo').text($(this).val())
-    tbKuota.empty()
-    penjualan.getPenjualanByNik(param).then(data => {
-      console.log(data)
-      data.map(kuota => {
-        tbKuota.append(
-          `<tr>`+
-            `<td>${kuota.barang_nama}</td>`+
-            `<td>${kuota.barang_kuota}</td>`+
-            `<td>${kuota.total_beli}</td>`+
-            `<td>${kuota.barang_kuota - kuota.total_beli}</td>`+
-            `<td>${kuota.end_kuota}</td>`+
-          `</tr>`
-        )
-      })
-    })
-    var arg = {byNik: $(this).val(), byStatus: 'Belum'}
-    penjualan.getPenjualan(arg).then(data => {
-      notifBon.addClass('hidden')
-      console.log(data)
-      update = false
+    newKonsumen.getKonsumen(param).then(data => {
+      // console.log(data[0].nama)
+      tbKuota.empty()
       if (data.length > 0) {
-        if (data[0].metode_nama == 'Cicilan') {
+        namaInfo.text(data[0].nama)
+        namaPembeli.val(data[0].nama)
+        kuota.getKuota(data[0].nik).then(kuotaData => {
+          console.log(kuotaData)
+          kuotaData.map(kuota => {
+            console.log('oke')
+            tbKuota.append(
+              `<tr>`+
+                `<td>${kuota.barang_nama}</td>`+
+                `<td>${kuota.barang_kuota}</td>`+
+                `<td>${kuota.jumlah_barang}</td>`+
+                `<td>${kuota.barang_kuota - kuota.jumlah_barang}</td>`+
+                `<td>${kuota.end_kuota}</td>`+
+              `</tr>`
+            )
+          })
+        })
+      }
+      
+    })
+    // tbKuota.empty()
+    // penjualan.getPenjualanByNik(param).then(data => {
+    //   console.log(data)
+    //   data.map(kuota => {
+    //     tbKuota.append(
+    //       `<tr>`+
+    //         `<td>${kuota.barang_nama}</td>`+
+    //         `<td>${kuota.barang_kuota}</td>`+
+    //         `<td>${kuota.total_beli}</td>`+
+    //         `<td>${kuota.barang_kuota - kuota.total_beli}</td>`+
+    //         `<td>${kuota.end_kuota}</td>`+
+    //       `</tr>`
+    //     )
+    //   })
+    // })
+    // var arg = {byNik: $(this).val(), byStatus: 'Belum'}
+    // penjualan.getPenjualan(arg).then(data => {
+    //   notifBon.addClass('hidden')
+    //   console.log(data)
+    //   update = false
+    //   if (data.length > 0) {
+    //     if (data[0].metode_nama == 'Cicilan') {
+    //       console.log('nyicil');
+    //       update = true
+    //       namaPembeli.val(data[0].penjualan_nama)
+    //       metodePembayaran.val(data[0].penjualan_metode_pembayaran)
+    //       jenisBarang.val(data[0].penjualan_nama_barang)
+    //       jumlahBarang.val(data[0].penjualan_jumlah_barang)
+    //       satuanBarang.val(data[0].penjualan_satuan_barang)
+    //       totalBayar.text(data[0].penjualan_total_bayar)
+    //       totalHargaKasir.text(data[0].penjualan_harga_barang)
+    //       sisaPembayarang.text(data[0].penjualan_harga_barang - data[0].penjualan_total_bayar)
+    //       notifBon.removeClass('hidden')
+    //       notifNik.text(data[0].penjualan_nik)
+    //       jmlhPembayaran.removeClass('hidden')
+    //       bayarOld = data[0].penjualan_total_bayar
+    //       kasirOld = data[0].penjualan_harga_barang
+    //       idPenjualan = data[0].penjualan_id
+    //     }
+    //   } else {
+    //     clearValue()
+    //   }
+    // })
+  })
+
+  cancel.click(function() {
+    clearValue()
+    jmlhPembayaran.addClass('hidden')
+    notifBon.addClass('hidden')
+  })
+
+  function setNotifBon(jenis) {
+    console.log('set notif', jenis);
+    
+    notifBon.addClass('hidden')
+    update = false
+    penjualan.getPenjualanByBarang(jenis).then(data => {
+      console.log(data);
+      
+      if (data.length > 0) {
+        // if (data[0].penjualan_status_pembayaran == 'Belum') {
           console.log('nyicil');
           update = true
           namaPembeli.val(data[0].penjualan_nama)
@@ -149,18 +218,12 @@ $(document).ready(function() {
           bayarOld = data[0].penjualan_total_bayar
           kasirOld = data[0].penjualan_harga_barang
           idPenjualan = data[0].penjualan_id
-        }
+        // }
       } else {
         clearValue()
       }
     })
-  })
-
-  cancel.click(function() {
-    clearValue()
-    jmlhPembayaran.addClass('hidden')
-    notifBon.addClass('hidden')
-  })
+  }
 
   function setTotalBayar(harga) {
     //console.log(metodePembayaran.val())
@@ -243,7 +306,7 @@ $(document).ready(function() {
       setSatuan(),
       metodePembayaran.val(),
       setStatusPembayaran(),
-      today(),
+      today(0),
       totalBayar.text()
     ]
 
@@ -252,34 +315,43 @@ $(document).ready(function() {
       param: 'penjualan'
     }
 
-    console.log('data', dataPenjualan)
+    // console.log('data', dataPenjualan)
 
     penjualan.insertPenjualan(wrapData).then(data => {
       console.log('id last insert',data)
       if (data > 0) {
         console.log('insert oke')
         //getPenjualan()
-        var dataNota = [data, dataPenjualan[4], dataPenjualan[9], dataPenjualan[9], today()]
-        nota.insertNota(dataNota).then(() => {
-          showNotaModal(dataPenjualan)
-          clearValue()
-          dataPenjualan.push($('option:selected', metodePembayaran).attr('data-nama'))
-          tbKasir.renderTbPenjualan()
-          pupuk.renderTbPenjualan()
-          pupuk.renderTbPupuk()
-          gudang.renderTbGudang()
-          panelBeranda.renderPanelPenjualan()
-          renderTbAir.renderTbPenjulanAir()
+        
+
+          var dataNota = [data, dataPenjualan[4], dataPenjualan[9], dataPenjualan[9], today(0)]
+          nota.insertNota(dataNota).then(() => {
+            showNotaModal(dataPenjualan)
+            clearValue()
+            dataPenjualan.push($('option:selected', metodePembayaran).attr('data-nama'))
+            tbKasir.renderTbPenjualan()
+            pupuk.renderTbPenjualan()
+            pupuk.renderTbPupuk()
+            gudang.renderTbGudang()
+            panelBeranda.renderPanelPenjualan()
+            renderTbAir.renderTbPenjulanAir()
+            
+            renderChart.setGrafikPupuk()
+            renderChart.setGrafikAir()
+            panelBeranda.renderPanelStock()
+            panelBeranda.renderPanelPiutang()
+            renderChart.setGrafikPupuk()
+            renderChart.setGrafikAir()
+
+            if (dataPenjualan[2] != 5) {
+              
+              let dataKuota = [dataPenjualan[1], dataPenjualan[2], dataPenjualan[3], today(0), today(1)]
+              kuota.insertKuota(dataKuota).then(() => {
+              
+              })
           
-          renderChart.setGrafikPupuk()
-          renderChart.setGrafikAir()
-          panelBeranda.renderPanelStock()
-          panelBeranda.renderPanelPiutang()
-          renderChart.setGrafikPupuk()
-          renderChart.setGrafikAir()
-        })
-        
-        
+            }
+          })
       }
     })
   }

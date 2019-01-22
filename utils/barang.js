@@ -6,6 +6,20 @@ const db = new sqlite3.Database(dbPath)
 
 const Promise = require('bluebird')
 
+exports.insertBarang = (arg) => {
+  let query = "INSERT INTO tb_barang (barang_nama, barang_category, barang_harga_jual, barang_kuota, barang_stock) VALUES (?, ?, 0, 0, 0)"
+  return new Promise((resolve, reject) => {
+    db.run(query, arg, (err) => {
+      if (err) {
+        console.log(err)
+        reject(err)
+      } else {
+        resolve(true)
+      }
+    })
+  })
+}
+
 exports.getBarang = (arg) => {
   let query = `SELECT * FROM tb_barang`
   if (arg.category != null) {

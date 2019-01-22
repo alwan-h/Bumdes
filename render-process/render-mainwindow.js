@@ -31,8 +31,8 @@ let screenCenterY = screenHeight / 2
 
 let mainWindow = remote.getCurrentWindow()
 
-let wWidth = 1240
-let wHeight = 700
+let wWidth = screenWidth
+let wHeight = screenHeight
 
 let wX = screenCenterX - (wWidth/2)
 let wY = screenCenterY - (wHeight/2)
