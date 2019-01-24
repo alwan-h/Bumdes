@@ -1,6 +1,6 @@
 {
-  "name": "Bumdes",
-  "version": "0.2.0",
+  "name": "bumdes",
+  "version": "0.2.1",
   "main": "main.js",
   "author": "Alwan",
   "scripts": {
@@ -22,7 +22,7 @@
   },
   "build": {
     "appId": "com.bumdesmajubersama.app",
-    "productName": "Bumdes Maju Bersama",
+    "productName": "Bumdes Tana Bojang",
     "extraResources": [
       "./database.sqlite3"
     ],

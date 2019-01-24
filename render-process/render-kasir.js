@@ -85,7 +85,8 @@ $(document).ready(function() {
     //console.log(harga)
     setTotalBayar(harga)
     satuanBarang.text(setSatuan())
-    setNotifBon(jenis)
+    var nikx = nik.val()
+    setNotifBon(nikx, jenis)
   })
 
   metodePembayaran.change(function() {
@@ -123,21 +124,85 @@ $(document).ready(function() {
       if (data.length > 0) {
         namaInfo.text(data[0].nama)
         namaPembeli.val(data[0].nama)
-        kuota.getKuota(data[0].nik).then(kuotaData => {
-          console.log(kuotaData)
-          kuotaData.map(kuota => {
-            console.log('oke')
-            tbKuota.append(
-              `<tr>`+
-                `<td>${kuota.barang_nama}</td>`+
-                `<td>${kuota.barang_kuota}</td>`+
-                `<td>${kuota.jumlah_barang}</td>`+
-                `<td>${kuota.barang_kuota - kuota.jumlah_barang}</td>`+
-                `<td>${kuota.end_kuota}</td>`+
-              `</tr>`
-            )
-          })
+        // kuota.getKuota(data[0].nik).then(kuotaData => {
+        //   console.log(kuotaData)
+        //   kuotaData.map(kuota => {
+        //     console.log('oke')
+        //     tbKuota.append(
+        //       `<tr>`+
+        //         `<td>${kuota.barang_nama}</td>`+
+        //         `<td>${kuota.barang_kuota}</td>`+
+        //         `<td>${kuota.jumlah_barang}</td>`+
+        //         `<td>${kuota.barang_kuota - kuota.jumlah_barang}</td>`+
+        //         `<td>${kuota.end_kuota}</td>`+
+        //       `</tr>`
+        //     )
+        //   })
+        // })
+        kuota.getKuota({nik: data[0].nik, id_barang: 1}).then(barang => {
+          $('#barang1').text(barang.jumlah_barang)
+          $('#sisa1').text((data[0].Urea) - (barang.jumlah_barang))
+          $('#end1').text(barang.end_kuota)
+          console.log({'beli': data[0].Urea, 'kuota': barang.jumlah_barang})
         })
+        kuota.getKuota({nik: data[0].nik, id_barang: 2}).then(barang => {
+          $('#barang2').text(parseFloat(barang.jumlah_barang))
+          $('#sisa2').text(data[0].SP_36 - barang.jumlah_barang)
+          $('#end2').text(barang.end_kuota)
+        })
+        kuota.getKuota({nik: data[0].nik, id_barang: 3}).then(barang => {
+          $('#barang3').text(barang.jumlah_barang)
+          $('#sisa3').text(data[0].NPK - barang.jumlah_barang)
+          $('#end3').text(barang.end_kuota)
+        })
+        kuota.getKuota({nik: data[0].nik, id_barang: 4}).then(barang => {
+          $('#barang4').text(barang.jumlah_barang)
+          $('#sisa4').text(data[0].ZA - barang.jumlah_barang)
+          $('#end4').text(barang.end_kuota)
+        })
+        kuota.getKuota({nik: data[0].nik, id_barang: 5}).then(barang => {
+          $('#barang5').text(barang.jumlah_barang)
+          $('#sisa5').text(data[0].Organik - barang.jumlah_barang)
+          $('#end5').text(barang.end_kuota)
+        })
+
+        tbKuota.append(
+          `<tr>`+
+            `<td>Urea</td>`+
+            `<td>${data[0].Urea}</td>`+
+            `<td><span id="barang1"></span></td>`+
+            `<td><span id="sisa1"></span></td>`+
+            `<td><span id="end1"></span></td>`+
+          `</tr>`+
+          `<tr>`+
+            `<td>SP-36</td>`+
+            `<td>${data[0].SP_36}</td>`+
+            `<td><span id="barang2"></span></td>`+
+            `<td><span id="sisa2"></span></td>`+
+            `<td><span id="end2"></span></td>`+
+          `</tr>`+
+          `<tr>`+
+            `<td>NPK</td>`+
+            `<td>${data[0].NPK}</td>`+
+            `<td><span id="barang3"></span></td>`+
+            `<td><span id="sisa3"></span></td>`+
+            `<td><span id="end3"></span></td>`+
+          `</tr>`+
+          `<tr>`+
+            `<td>ZA</td>`+
+            `<td>${data[0].ZA}</td>`+
+            `<td><span id="barang4"></span></td>`+
+            `<td><span id="sisa4"></span></td>`+
+            `<td><span id="end4"></span></td>`+
+          `</tr>`+
+          `<tr>`+
+            `<td>Organik</td>`+
+            `<td>${data[0].Organik}</td>`+
+            `<td><span id="barang5"></span></td>`+
+            `<td><span id="sisa5"></span></td>`+
+            `<td><span id="end5"></span></td>`+
+          `</tr>`
+        )
       }
       
     })
@@ -192,12 +257,12 @@ $(document).ready(function() {
     notifBon.addClass('hidden')
   })
 
-  function setNotifBon(jenis) {
+  function setNotifBon(nik, jenis) {
     console.log('set notif', jenis);
     
     notifBon.addClass('hidden')
     update = false
-    penjualan.getPenjualanByBarang(jenis).then(data => {
+    penjualan.getPenjualanByBarang([jenis, nik]).then(data => {
       console.log(data);
       
       if (data.length > 0) {
@@ -220,7 +285,7 @@ $(document).ready(function() {
           idPenjualan = data[0].penjualan_id
         // }
       } else {
-        clearValue()
+        // clearValue()
       }
     })
   }

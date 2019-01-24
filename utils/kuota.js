@@ -22,16 +22,26 @@ exports.insertKuota = (arg) => {
 
 exports.getKuota = (arg) => {
   console.log(arg)
-  let query = `SELECT SUM(tb_kuota.jumlah_barang) as jumlah_barang, MIN(tb_kuota.start_kuota) as start_kuota, tb_kuota.end_kuota, tb_barang.* FROM tb_kuota JOIN tb_barang WHERE tb_barang.barang_id = tb_kuota.barang AND tb_kuota.nik = "${arg}" GROUP BY tb_kuota.barang` 
-  // if (arg != null || arg != '') {
-  //   query += ` WHERE tb_kuota.nik = ${arg}`
-  // }
+  let query = `SELECT SUM(tb_kuota.jumlah_barang) as jumlah_barang, MIN(tb_kuota.start_kuota) as start_kuota, tb_kuota.end_kuota, tb_barang.* FROM tb_kuota JOIN tb_barang WHERE tb_barang.barang_id = tb_kuota.barang AND tb_kuota.nik = "${arg.nik}"` 
+  if (arg.id_barang != null) {
+    query += ` AND tb_kuota.barang = ${arg.id_barang}`
+  }
+
+  query += ' GROUP BY tb_kuota.barang'
+
   return new Promise((resolve, reject) => {
     db.all(query, (err, data) => {
       if (err) {
         reject(err)
       } else {
-        resolve(data)
+        if (data.length > 0) {
+          resolve(data[0])
+        }
+        else {
+          resolve({jumlah_barang: 0})
+        }
+        // console.log(data[0].jumlah_barang)
+        // return data[0].jumlah_barang
       }
     })
   })

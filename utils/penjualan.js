@@ -119,7 +119,7 @@ exports.getPenjualanByNik = (arg) => {
 }
 
 exports.getPenjualanByBarang = (arg) => {
-  let query = `SELECT * FROM tb_penjualan WHERE penjualan_status_pembayaran = "Belum" AND penjualan_nama_barang = ?`
+  let query = `SELECT * FROM tb_penjualan WHERE penjualan_status_pembayaran = "Belum" AND penjualan_nama_barang = ? AND penjualan_nik = ?`
   return new Promise((resolve, reject) => {
     db.all(query, arg, (err, data) => {
       if (err) {

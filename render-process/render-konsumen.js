@@ -18,6 +18,11 @@ $(document).ready(function() {
       kelompokTani.val(),
       namaDesa.val(),
       luasLahan.val(),
+      (parseFloat(luasLahan.val()) * 100) * 2,
+      0,
+      (parseFloat(luasLahan.val()) * 100) * 3,
+      0,
+      (parseFloat(luasLahan.val()) * 100) * 5
     ]
 
     konsumen.insertKonsumen(dataKonsumen).then(data => {
