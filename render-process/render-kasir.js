@@ -36,6 +36,7 @@ $(document).ready(function() {
   var jmlhPembayaran = $('#jmlhPembayaran')
   var cancel = $('#cancel')
   var namaInfo = $('#namaInfo')
+  var notifKuota = $('#notifKuota')
   var statusPembayaran
   var update = false
   var bayarOld
@@ -96,9 +97,12 @@ $(document).ready(function() {
   })
 
   jumlahBarang.keyup(function() {
+    notifKuota.addClass('hidden')
     var harga = $('option:selected', jenisBarang).attr('data-harga')
+    var jenis = jenisBarang.val()
     //console.log(harga)
     setTotalBayar(harga)
+    setNotifKuota(jumlahBarang.val(), jenis)
   })
 
   
@@ -141,28 +145,62 @@ $(document).ready(function() {
         // })
         kuota.getKuota({nik: data[0].nik, id_barang: 1}).then(barang => {
           $('#barang1').text(barang.jumlah_barang)
-          $('#sisa1').text((data[0].Urea) - (barang.jumlah_barang))
+          var sisaKuota = (data[0].Urea) - (barang.jumlah_barang)
+          if (sisaKuota < 0) {
+            notifKuota.removeClass('hidden')
+          } else {
+            notifKuota.addClass('hidden')
+          }
+          $('#sisa1').text(sisaKuota)
           $('#end1').text(barang.end_kuota)
           console.log({'beli': data[0].Urea, 'kuota': barang.jumlah_barang})
         })
         kuota.getKuota({nik: data[0].nik, id_barang: 2}).then(barang => {
           $('#barang2').text(parseFloat(barang.jumlah_barang))
-          $('#sisa2').text(data[0].SP_36 - barang.jumlah_barang)
+          var sisaKuota = (data[0].SP_36) - (barang.jumlah_barang)
+          if (sisaKuota < 0) {
+            notifKuota.removeClass('hidden')
+          } else {
+            notifKuota.addClass('hidden')
+          }
+          $('#sisa2').text(sisaKuota)
+          // $('#sisa2').text(data[0].SP_36 - barang.jumlah_barang)
           $('#end2').text(barang.end_kuota)
         })
         kuota.getKuota({nik: data[0].nik, id_barang: 3}).then(barang => {
           $('#barang3').text(barang.jumlah_barang)
-          $('#sisa3').text(data[0].NPK - barang.jumlah_barang)
+          var sisaKuota = (data[0].NPK) - (barang.jumlah_barang)
+          if (sisaKuota < 0) {
+            notifKuota.removeClass('hidden')
+          } else {
+            notifKuota.addClass('hidden')
+          }
+          $('#sisa3').text(sisaKuota)
+          // $('#sisa3').text(data[0].NPK - barang.jumlah_barang)
           $('#end3').text(barang.end_kuota)
         })
         kuota.getKuota({nik: data[0].nik, id_barang: 4}).then(barang => {
           $('#barang4').text(barang.jumlah_barang)
-          $('#sisa4').text(data[0].ZA - barang.jumlah_barang)
+          var sisaKuota = (data[0].ZA) - (barang.jumlah_barang)
+          if (sisaKuota < 0) {
+            notifKuota.removeClass('hidden')
+          } else {
+            notifKuota.addClass('hidden')
+          }
+          $('#sisa4').text(sisaKuota)
+          // $('#sisa4').text(data[0].ZA - barang.jumlah_barang)
           $('#end4').text(barang.end_kuota)
         })
         kuota.getKuota({nik: data[0].nik, id_barang: 5}).then(barang => {
           $('#barang5').text(barang.jumlah_barang)
-          $('#sisa5').text(data[0].Organik - barang.jumlah_barang)
+          var sisaKuota = (data[0].Organik) - (barang.jumlah_barang)
+          if (sisaKuota < 0) {
+            notifKuota.removeClass('hidden')
+          } else {
+            notifKuota.addClass('hidden')
+          }
+          $('#sisa5').text(sisaKuota)
+          // $('#sisa5').text(data[0].Organik - barang.jumlah_barang)
           $('#end5').text(barang.end_kuota)
         })
 
@@ -304,6 +342,38 @@ $(document).ready(function() {
     }
 
     setTotalHarga(harga)
+  }
+
+  function setNotifKuota(jumlahBarang, jenisBarang) {
+    if (jenisBarang == 1) {
+      var sisa = $('#sisa1').text()
+      if (sisa < jumlahBarang) {
+        notifKuota.removeClass('hidden')
+      } else {
+        notifKuota.addClass('hidden')
+      }
+    } else if (jenisBarang == 2) {
+      var sisa = $('#sisa2').text()
+      if (sisa < jumlahBarang) {
+        notifKuota.removeClass('hidden')
+      } else {
+        notifKuota.addClass('hidden')
+      }
+    } else if (jenisBarang == 3) {
+      var sisa = $('#sisa3').text()
+      if (sisa < jumlahBarang) {
+        notifKuota.removeClass('hidden')
+      } else {
+        notifKuota.addClass('hidden')
+      }
+    } else if (jenisBarang == 4) {
+      var sisa = $('#sisa4').text()
+      if (sisa < jumlahBarang) {
+        notifKuota.removeClass('hidden')
+      } else {
+        notifKuota.addClass('hidden')
+      }
+    }
   }
 
   function setTotalHarga(harga) {

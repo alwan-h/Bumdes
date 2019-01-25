@@ -22,7 +22,7 @@ exports.renderTbPupuk = () => {
               `<td>${index+1}</td>`+
               `<td>${jenis.barang_nama}</td>`+
               `<td>${jenis.barang_harga_jual}</td>`+
-              `<td>${jenis.barang_kuota}</td>`+
+              // `<td>${jenis.barang_kuota}</td>`+
               `<td>${jenis.barang_stock} Kg</td>`+
               `<td><button class="btn btn-default btn-xs btn-edit-pupuk" data-id="${jenis.barang_id}" data-toggle="modal" data-target="#pupuk_modal_edit">Edit</button> `+
               `<button class="btn btn-danger btn-xs btn-delete-pupuk" data-id="${jenis.barang_id}">Delete</button></td>`+
