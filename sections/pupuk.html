@@ -1,104 +1,119 @@
 <template class="task-template">
   <section id="pupuk-section" class="section js-section u-category-pupuk">
-    
-      <div class="section-wrapper">
-        <!-- <div class="section-header">PUPUK</div> -->
-        <div class="row">
-          
-          <div class="col-md-12">
-            <div class="card">
+    <div class="section-wrapper">
+      <!-- <div class="section-header">PUPUK</div> -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="content">
+              <div>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                  <li role="presentation" class="active">
+                    <a
+                      href="#home"
+                      aria-controls="home"
+                      role="tab"
+                      data-toggle="tab"
+                      >Data Pupuk</a
+                    >
+                  </li>
+                  <li role="presentation">
+                    <a
+                      href="#profile"
+                      aria-controls="profile"
+                      role="tab"
+                      data-toggle="tab"
+                      >Data Pembelian</a
+                    >
+                  </li>
+                  <li role="presentation">
+                    <a
+                      href="#messages"
+                      aria-controls="messages"
+                      role="tab"
+                      data-toggle="tab"
+                      >Data Penjualan</a
+                    >
+                  </li>
+                  <!-- <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li> -->
+                </ul>
 
-              <div class="content">
-      
-                <div>
-      
-                  <!-- Nav tabs -->
-                  <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Data Pupuk</a></li>
-                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Data Pembelian</a></li>
-                    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Data Penjualan</a></li>
-                    <!-- <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li> -->
-                  </ul>
-                
-                  <!-- Tab panes -->
-                  <div class="tab-content">
-
-                    <div role="tabpanel" class="tab-pane active" id="home">
-                      <!-- <button id="refreshDataPupuk" class="btn btn-primary btn-sm btn-fill pull-right btn-refresh">Refresh Data</button> -->
-                      <br>
-                      <table class="table table-hover table-striped" id="pupuk-table-jenis-pupuk">
-                        <thead>
-                          <th>No.</th>
-                          <th>Nama Barang</th>
-                          <!-- <th>Jumlah</th>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="home">
+                    <!-- <button id="refreshDataPupuk" class="btn btn-primary btn-sm btn-fill pull-right btn-refresh">Refresh Data</button> -->
+                    <br />
+                    <table
+                      class="table table-hover table-striped"
+                      id="pupuk-table-jenis-pupuk"
+                    >
+                      <thead>
+                        <th>No.</th>
+                        <th>Nama Barang</th>
+                        <!-- <th>Jumlah</th>
                           <th>Satuan</th>
                           <th>Harga Beli</th> -->
-                          <th>Harga Jual</th>
-                          <!-- <th>Kuota/Orang</th> -->
-                          <th>Stock</th>
-                          <th>Aksi</th>
-                        </thead>
-                        <tbody>
-                          
-                        </tbody>
-                      </table>
-                    </div>
+                        <th>Harga Jual</th>
+                        <!-- <th>Kuota/Orang</th> -->
+                        <th>Stock</th>
+                        <th>Aksi</th>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
 
-                    <div role="tabpanel" class="tab-pane" id="profile">
-
-                      <div role="tabpanel" class="tab-pane active" id="home">
-                          <!-- <button id="refreshDataPupuk" class="btn btn-primary btn-sm btn-fill pull-right btn-refresh">Refresh Data</button> -->
-                        <br>
-                        <table class="table table-hover table-striped" id="pupuk-data-pembelian" width="100%">
-                          <thead>
-                            <th>No.</th>
-                            <th>Jenis Pupuk</th>
-                            <th>Jumlah</th>
-                            <th>Harga Beli</th>
-                            <th>Tanggal Beli</th>
-                          </thead>
-                          <tbody>
-                            
-                          </tbody>
-                        </table>
-                      </div>
-
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="messages">
-                      <br>
-                      <table class="table table-hover table-striped" id="pupuk-data-penjualan" width="100%">
+                  <div role="tabpanel" class="tab-pane" id="profile">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                      <!-- <button id="refreshDataPupuk" class="btn btn-primary btn-sm btn-fill pull-right btn-refresh">Refresh Data</button> -->
+                      <br />
+                      <table
+                        class="table table-hover table-striped"
+                        id="pupuk-data-pembelian"
+                        width="100%"
+                      >
                         <thead>
                           <th>No.</th>
-                          <th>Tanggal</th>
-                          <th>Nama Pembeli</th>
-                          <th>Nik</th>
-                          <th>Nama Barang</th>
-                          <th>Jumlah Barang</th>
-                          <th>Harga Barang</th>
-                          <th>Metode</th>
-                          <th>Status</th>
+                          <th>Jenis Pupuk</th>
+                          <th>Jumlah</th>
+                          <th>Harga Beli</th>
+                          <th>Tanggal Beli</th>
                         </thead>
-                        <tbody>
-                          
-                        </tbody>
+                        <tbody></tbody>
                       </table>
                     </div>
-                    <!-- <div role="tabpanel" class="tab-pane" id="settings">...</div> -->
                   </div>
-                
+                  <div role="tabpanel" class="tab-pane" id="messages">
+                    <br />
+                    <table
+                      class="table table-hover table-striped"
+                      id="pupuk-data-penjualan"
+                      width="100%"
+                    >
+                      <thead>
+                        <th>No.</th>
+                        <th>Tanggal</th>
+                        <th>Nama Pembeli</th>
+                        <th>Nik</th>
+                        <th>Nama Barang</th>
+                        <th>Jumlah Barang</th>
+                        <th>Harga Barang</th>
+                        <th>Metode</th>
+                        <th>Status</th>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                  <!-- <div role="tabpanel" class="tab-pane" id="settings">...</div> -->
                 </div>
-              
               </div>
-      
             </div>
-            
-      
           </div>
         </div>
       </div>
-    
+    </div>
   </section>
 </template>
 <script>
-  require('./render-process/render-pupuk.js')
+  require("./render-process/render-pupuk.js");
 </script>
