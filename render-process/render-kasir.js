@@ -52,13 +52,15 @@ $(document).ready(function() {
     // return year+'-'+month+'-'+day
 
     var date = new Date(); // Now
-    date.setDate(date.getDate()); // Set now + 30 days as the new date
+    // date.setDate(date.getDate()); // Set now + 30 days as the new date
     //console.log(date.toISOString().slice(0, 10));
     date.setFullYear(date.getFullYear() + arg);
     return date.toISOString().slice(0, 10);
   };
 
   console.log(today(0));
+
+  console.log("test", "2010-10-01" > "2010-02-20");
 
   //var date = new Date(); // Now
   //date.setDate(date.getDate() + 30); // Set now + 30 days as the new date
@@ -140,6 +142,9 @@ $(document).ready(function() {
         //     )
         //   })
         // })
+
+        console.log("data konsumen", data[0]);
+
         kuota.getKuota({ nik: data[0].nik, id_barang: 1 }).then(barang => {
           $("#barang1").text(barang.jumlah_barang);
           var sisaKuota = data[0].Urea - barang.jumlah_barang;
@@ -151,6 +156,8 @@ $(document).ready(function() {
           $("#sisa1").text(sisaKuota);
           $("#end1").text(barang.end_kuota);
           console.log({ beli: data[0].Urea, kuota: barang.jumlah_barang });
+          console.log("data", barang);
+          checkEndKuota(data[0].nik, 1, barang.end_kuota, today(0));
         });
         kuota.getKuota({ nik: data[0].nik, id_barang: 2 }).then(barang => {
           $("#barang2").text(parseFloat(barang.jumlah_barang));
@@ -161,8 +168,9 @@ $(document).ready(function() {
             notifKuota.addClass("hidden");
           }
           $("#sisa2").text(sisaKuota);
-          // $('#sisa2').text(data[0].SP_36 - barang.jumlah_barang)
           $("#end2").text(barang.end_kuota);
+          console.log("data", barang);
+          checkEndKuota(data[0].nik, 2, barang.end_kuota, today(0));
         });
         kuota.getKuota({ nik: data[0].nik, id_barang: 3 }).then(barang => {
           $("#barang3").text(barang.jumlah_barang);
@@ -175,6 +183,7 @@ $(document).ready(function() {
           $("#sisa3").text(sisaKuota);
           // $('#sisa3').text(data[0].NPK - barang.jumlah_barang)
           $("#end3").text(barang.end_kuota);
+          checkEndKuota(data[0].nik, 3, barang.end_kuota, today(0));
         });
         kuota.getKuota({ nik: data[0].nik, id_barang: 4 }).then(barang => {
           $("#barang4").text(barang.jumlah_barang);
@@ -187,8 +196,9 @@ $(document).ready(function() {
           $("#sisa4").text(sisaKuota);
           // $('#sisa4').text(data[0].ZA - barang.jumlah_barang)
           $("#end4").text(barang.end_kuota);
+          checkEndKuota(data[0].nik, 4, barang.end_kuota, today(0));
         });
-        kuota.getKuota({ nik: data[0].nik, id_barang: 5 }).then(barang => {
+        kuota.getKuota({ nik: data[0].nik, id_barang: 12 }).then(barang => {
           $("#barang5").text(barang.jumlah_barang);
           var sisaKuota = data[0].Organik - barang.jumlah_barang;
           if (sisaKuota < 0) {
@@ -199,6 +209,7 @@ $(document).ready(function() {
           $("#sisa5").text(sisaKuota);
           // $('#sisa5').text(data[0].Organik - barang.jumlah_barang)
           $("#end5").text(barang.end_kuota);
+          checkEndKuota(data[0].nik, 12, barang.end_kuota, today(0));
         });
 
         tbKuota.append(
@@ -591,6 +602,7 @@ $(document).ready(function() {
       parseInt(hargaBarang) * parseInt(data[3]) - parseInt(totalBayar.text());
     $("#nota-sisa").text(sisa);
     $("#nama-konsumen").text(data[0]);
+    $("#nama-kasir").text(sessionStorage.getItem("user_username"));
 
     if (update) {
       pembayaranSekarang = jumlahPembayaran.val();
@@ -612,7 +624,8 @@ $(document).ready(function() {
       nota_dp: dp,
       nota_sisa: sisa,
       nama_konsumen: data[0],
-      nota_jumlah_pembayaran: pembayaranSekarang
+      nota_jumlah_pembayaran: pembayaranSekarang,
+      nama_kasir: sessionStorage.getItem("user_username")
     };
 
     $("#print-nota").click(function() {
@@ -635,5 +648,19 @@ $(document).ready(function() {
     //$('#nikInfo').text('')
     tbKuota.empty();
     jmlhPembayaran.addClass("hidden");
+  }
+
+  function checkEndKuota(nik, barang, end, now) {
+    console.log("now", now);
+    console.log("end", end);
+    if (now >= end) {
+      console.log("delete kuota");
+      var arg = {
+        nik: nik,
+        barang: barang,
+        end_kuota: end
+      };
+      kuota.deleteKuota(arg);
+    }
   }
 });
