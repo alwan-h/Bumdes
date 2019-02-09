@@ -82,6 +82,7 @@ $(document).ready(function() {
   konsumen.deleteKonsumen();
 
   jenisBarang.change(function() {
+    clearValue2();
     var harga = $("option:selected", this).attr("data-harga");
     var jenis = $("option:selected", this).val();
     //console.log(harga)
@@ -127,21 +128,6 @@ $(document).ready(function() {
       if (data.length > 0) {
         namaInfo.text(data[0].nama);
         namaPembeli.val(data[0].nama);
-        // kuota.getKuota(data[0].nik).then(kuotaData => {
-        //   console.log(kuotaData)
-        //   kuotaData.map(kuota => {
-        //     console.log('oke')
-        //     tbKuota.append(
-        //       `<tr>`+
-        //         `<td>${kuota.barang_nama}</td>`+
-        //         `<td>${kuota.barang_kuota}</td>`+
-        //         `<td>${kuota.jumlah_barang}</td>`+
-        //         `<td>${kuota.barang_kuota - kuota.jumlah_barang}</td>`+
-        //         `<td>${kuota.end_kuota}</td>`+
-        //       `</tr>`
-        //     )
-        //   })
-        // })
 
         console.log("data konsumen", data[0]);
 
@@ -338,9 +324,6 @@ $(document).ready(function() {
   }
 
   function setTotalBayar(harga) {
-    //console.log(metodePembayaran.val())
-    //console.log('jumlah barang', jumlahBarang.val());
-
     if (metodePembayaran.val() == 1) {
       totalBayar.text(harga * jumlahBarang.val());
     } else if (metodePembayaran.val() == 2) {
@@ -394,21 +377,6 @@ $(document).ready(function() {
   function getPesanan() {
     // pesanan.empty()
     var param = { category: null };
-    // ipcRenderer.send('get-barang', param)
-    // ipcRenderer.on('data-barang', (event, arg) => {
-    //   jenisBarang.empty()
-    //   jenisBarang.append('<option></option>')
-    //   console.log('data barang kasir', arg)
-    //   arg.map(barang => {
-    //     if (barang.barang_stock != 0) {
-    //       jenisBarang.append(
-    //         `<option value="${barang.barang_id}" data-harga="${barang.barang_harga_jual}" data-nama="${barang.barang_nama}">${barang.barang_nama}</option>`
-    //       )
-    //     }
-
-    //   })
-
-    // })
 
     barang.getBarang(param).then(data => {
       jenisBarang.empty();
@@ -442,6 +410,11 @@ $(document).ready(function() {
   }
 
   function simpanPenjualan() {
+    var tbPenjualan = $("#data-penjualan");
+
+    // tbPenjualan.DataTable().destroy();
+    // tbPenjualan.children("tbody").empty();
+
     console.log("total bayar", totalBayar.text());
     var dataPenjualan = [
       namaPembeli.val(),
@@ -482,6 +455,8 @@ $(document).ready(function() {
           dataPenjualan.push(
             $("option:selected", metodePembayaran).attr("data-nama")
           );
+          // tbPenjualan.DataTable().destroy();
+          // tbPenjualan.children("tbody").empty();
           tbKasir.renderTbPenjualan();
           pupuk.renderTbPenjualan();
           pupuk.renderTbPupuk();
@@ -516,7 +491,7 @@ $(document).ready(function() {
     if (sisaPembayarang.text() == "0") {
       statusPembayaran = "Lunas";
     }
-    var arg = [totalBayar.text(), statusPembayaran, today(), idPenjualan];
+    var arg = [totalBayar.text(), statusPembayaran, today(0), idPenjualan];
     var dataPenjualan = [
       namaPembeli.val(),
       nik.val(),
@@ -526,7 +501,7 @@ $(document).ready(function() {
       setSatuan(),
       metodePembayaran.val(),
       setStatusPembayaran,
-      today(),
+      today(0),
       totalBayar.text()
     ];
     penjualan.updatePenjualan(arg).then(data => {
@@ -537,7 +512,7 @@ $(document).ready(function() {
           dataPenjualan[4],
           jumlahPembayaran.val(),
           dataPenjualan[9],
-          today()
+          today(0)
         ];
         nota.insertNota(dataNota).then(() => {
           //getPenjualan()
@@ -647,6 +622,21 @@ $(document).ready(function() {
     sisaPembayarang.text(0);
     //$('#nikInfo').text('')
     tbKuota.empty();
+    jmlhPembayaran.addClass("hidden");
+  }
+
+  function clearValue2() {
+    // metodePembayaran.val("");
+    //nik.val('')
+    // jenisBarang.val("");
+    // jumlahBarang.val(0);
+    // satuanBarang.val("");
+    // namaPembeli.val("");
+    totalBayar.text(0);
+    totalHargaKasir.text(0);
+    sisaPembayarang.text(0);
+    //$('#nikInfo').text('')
+    // tbKuota.empty();
     jmlhPembayaran.addClass("hidden");
   }
 
