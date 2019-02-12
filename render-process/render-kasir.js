@@ -140,10 +140,11 @@ $(document).ready(function() {
             notifKuota.addClass("hidden");
           }
           $("#sisa1").text(sisaKuota);
-          $("#end1").text(barang.end_kuota);
-          console.log({ beli: data[0].Urea, kuota: barang.jumlah_barang });
-          console.log("data", barang);
+          // $("#end1").text(barang.end_kuota);
+          // console.log({ beli: data[0].Urea, kuota: barang.jumlah_barang });
+          // console.log("data", barang);
           checkEndKuota(data[0].nik, 1, barang.end_kuota, today(0));
+          getSisaPembayaran(data[0].nik, 1, $("#end1"));
         });
         kuota.getKuota({ nik: data[0].nik, id_barang: 2 }).then(barang => {
           $("#barang2").text(parseFloat(barang.jumlah_barang));
@@ -154,9 +155,10 @@ $(document).ready(function() {
             notifKuota.addClass("hidden");
           }
           $("#sisa2").text(sisaKuota);
-          $("#end2").text(barang.end_kuota);
-          console.log("data", barang);
+          // $("#end2").text(barang.end_kuota);
+          // console.log("data", barang);
           checkEndKuota(data[0].nik, 2, barang.end_kuota, today(0));
+          getSisaPembayaran(data[0].nik, 2, $("#end2"));
         });
         kuota.getKuota({ nik: data[0].nik, id_barang: 3 }).then(barang => {
           $("#barang3").text(barang.jumlah_barang);
@@ -168,8 +170,9 @@ $(document).ready(function() {
           }
           $("#sisa3").text(sisaKuota);
           // $('#sisa3').text(data[0].NPK - barang.jumlah_barang)
-          $("#end3").text(barang.end_kuota);
+          // $("#end3").text(barang.end_kuota);
           checkEndKuota(data[0].nik, 3, barang.end_kuota, today(0));
+          getSisaPembayaran(data[0].nik, 3, $("#end3"));
         });
         kuota.getKuota({ nik: data[0].nik, id_barang: 4 }).then(barang => {
           $("#barang4").text(barang.jumlah_barang);
@@ -181,8 +184,9 @@ $(document).ready(function() {
           }
           $("#sisa4").text(sisaKuota);
           // $('#sisa4').text(data[0].ZA - barang.jumlah_barang)
-          $("#end4").text(barang.end_kuota);
+          // $("#end4").text(barang.end_kuota);
           checkEndKuota(data[0].nik, 4, barang.end_kuota, today(0));
+          getSisaPembayaran(data[0].nik, 4, $("#end4"));
         });
         kuota.getKuota({ nik: data[0].nik, id_barang: 12 }).then(barang => {
           $("#barang5").text(barang.jumlah_barang);
@@ -194,8 +198,9 @@ $(document).ready(function() {
           }
           $("#sisa5").text(sisaKuota);
           // $('#sisa5').text(data[0].Organik - barang.jumlah_barang)
-          $("#end5").text(barang.end_kuota);
+          // $("#end5").text(barang.end_kuota);
           checkEndKuota(data[0].nik, 12, barang.end_kuota, today(0));
+          getSisaPembayaran(data[0].nik, 12, $("#end5"));
         });
 
         tbKuota.append(
@@ -287,6 +292,18 @@ $(document).ready(function() {
     jmlhPembayaran.addClass("hidden");
     notifBon.addClass("hidden");
   });
+
+  function getSisaPembayaran(nik, jenis, element) {
+    var sisaPembayaran;
+    penjualan.getPenjualanByBarang([jenis, nik]).then(data => {
+      if (data.length > 0) {
+        sisaPembayaran =
+          data[0].penjualan_harga_barang - data[0].penjualan_total_bayar;
+        element.text(sisaPembayaran);
+        console.log(sisaPembayaran);
+      }
+    });
+  }
 
   function setNotifBon(nik, jenis) {
     console.log("set notif", jenis);
